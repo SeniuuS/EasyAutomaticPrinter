@@ -1,0 +1,125 @@
+﻿<Window x:Class="EAP.PrintWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EAP"
+        mc:Ignorable="d"
+        Title="Easy Automatic Printer" Height="400" Width="800">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open files" Click="mnuSelectFile_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/open.png" Width="16px" Height="16px" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Drop selected files" Click="mnuDropFile_Click" InputGestureText="Delete">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/file_delete.png" Width="16px" Height="16px"  />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Clear selected files" Click="mnuDropAllFile_Click">
+                </MenuItem>
+                    <Separator />
+                <MenuItem Header="_Exit" Click="mnuExit_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/exit.png" Width="16px" Height="16px" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Print">
+                <MenuItem Header="_Print" Click="mnuPrint_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/printer.png" Width="16px" Height="16px" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Change Printer" Click="mnuChangePrint_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/changeprinter.png" Width="16px" Height="16px"  />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_Automatically retry when an error occurs" Click="mnuRetryAuto_Click" IsCheckable="True" Name="RetryAuto" />
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="_Show toolbar" Click="mnuShowToolBar_Click" IsCheckable="true" Name="ShowToolBar" />
+            </MenuItem>
+            <MenuItem Header="_Options">
+                <MenuItem Header="_Image Margin" Click="mnuImageMargin_Click" IsCheckable="True" IsChecked="True" Name="ImageMargin" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_Donation..." Click="mnuDonation_Click" Name="DonationHead">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/donate.png" Width="16px" Height="16px"  />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_About..." Click="mnuAbout_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/info.png" Width="16px" Height="16px"  />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <ToolBar DockPanel.Dock="Top" Visibility="Collapsed" Name="ToolBar">
+            <Button Name="btnSelectFile" Click="btnSelectFile_Click" ToolTip="Select files">
+                <Button.Content>
+                    <Image Source="/Resources/open.png" Width="16" Height="16" />
+                </Button.Content>
+            </Button>
+            <Button Name="btnDropFile" Click="btnDropFile_Click" ToolTip="Drop selected files">
+                <Button.Content>
+                    <Image Source="/Resources/file_delete.png" Width="16" Height="16" />
+                </Button.Content>
+            </Button>
+            <Separator></Separator>
+            <Button Name="btnPrint" Click="btnPrint_Click" ToolTip="Print all files">
+                <Button.Content>
+                    <Image Source="/Resources/printer.png" Width="16" Height="16" />
+                </Button.Content>
+            </Button>
+            <Button Name="btnChangePrint" Click="btnChangePrint_Click" ToolTip="Change printer">
+                <Button.Content>
+                    <Image Source="/Resources/changeprinter.png" Width="16" Height="16" />
+                </Button.Content>
+            </Button>
+        </ToolBar>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.4*"/>
+                            <ColumnDefinition Width="0.6*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="0.7*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <TextBlock>Number of documents :</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="1">
+                <TextBlock Name="NbDoc">0</TextBlock>
+            </StatusBarItem>
+            <Separator Grid.Column="2" />
+            <StatusBarItem Grid.Column="3">
+                <TextBlock>Printer selected :</TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="4">
+                <TextBlock Name="printerName" />
+            </StatusBarItem>
+        </StatusBar>
+        <ListView Name="files" Margin="0, 2, 0, 0" AllowDrop="True" DragEnter="files_DragEnter" Drop="files_ItemDrop" KeyDown="files_KeyDown" ToolTip="Drag documents to print">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="500" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Status" Width="285" DisplayMemberBinding="{Binding Status}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+
+</Window>
